@@ -14,6 +14,7 @@
 		5507DD771833F1D900907AAF /* immerseReadDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5507DD761833F1D900907AAF /* immerseReadDocument.m */; };
 		5507DD7A1833F1D900907AAF /* immerseReadDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5507DD781833F1D900907AAF /* immerseReadDocument.xib */; };
 		5507DD7D1833F1D900907AAF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5507DD7B1833F1D900907AAF /* MainMenu.xib */; };
+		5507DD851833F3C400907AAF /* TextViewFix.m in Sources */ = {isa = PBXBuildFile; fileRef = 5507DD841833F3C400907AAF /* TextViewFix.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,8 @@
 		5507DD761833F1D900907AAF /* immerseReadDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = immerseReadDocument.m; sourceTree = "<group>"; };
 		5507DD791833F1D900907AAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/immerseReadDocument.xib; sourceTree = "<group>"; };
 		5507DD7C1833F1D900907AAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		5507DD831833F3C400907AAF /* TextViewFix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewFix.h; sourceTree = "<group>"; };
+		5507DD841833F3C400907AAF /* TextViewFix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewFix.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +91,8 @@
 				5507DD761833F1D900907AAF /* immerseReadDocument.m */,
 				5507DD781833F1D900907AAF /* immerseReadDocument.xib */,
 				5507DD7B1833F1D900907AAF /* MainMenu.xib */,
+				5507DD831833F3C400907AAF /* TextViewFix.h */,
+				5507DD841833F3C400907AAF /* TextViewFix.m */,
 				5507DD6A1833F1D900907AAF /* Supporting Files */,
 			);
 			path = immerseRead;
@@ -173,6 +178,7 @@
 			files = (
 				5507DD701833F1D900907AAF /* main.m in Sources */,
 				5507DD771833F1D900907AAF /* immerseReadDocument.m in Sources */,
+				5507DD851833F3C400907AAF /* TextViewFix.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +276,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "immerseRead/immerseRead-Prefix.pch";
 				INFOPLIST_FILE = "immerseRead/immerseRead-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -282,6 +289,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "immerseRead/immerseRead-Prefix.pch";
 				INFOPLIST_FILE = "immerseRead/immerseRead-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -306,6 +314,7 @@
 				5507DD821833F1D900907AAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
