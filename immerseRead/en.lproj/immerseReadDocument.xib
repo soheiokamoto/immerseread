@@ -2235,19 +2235,19 @@ wGw</bytes>
 							</object>
 							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 						</object>
-						<object class="NSButton" id="373060259">
+						<object class="NSButton" id="39682406">
 							<reference key="NSNextResponder" ref="568628114"/>
 							<int key="NSvFlags">256</int>
 							<string key="NSFrame">{{143, 108}, {75, 32}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSButtonCell" key="NSCell" id="236179361">
+							<object class="NSButtonCell" key="NSCell" id="360384552">
 								<int key="NSCellFlags">67108864</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">Reset</string>
 								<reference key="NSSupport" ref="134370244"/>
-								<reference key="NSControlView" ref="373060259"/>
+								<reference key="NSControlView" ref="39682406"/>
 								<int key="NSButtonFlags">-2038284288</int>
 								<int key="NSButtonFlags2">1</int>
 								<reference key="NSAlternateImage" ref="134370244"/>
@@ -2748,7 +2748,7 @@ wGw</bytes>
 					<object class="IBActionConnection" key="connection">
 						<string key="label">resetSettings:</string>
 						<reference key="source" ref="512844837"/>
-						<reference key="destination" ref="373060259"/>
+						<reference key="destination" ref="39682406"/>
 					</object>
 					<int key="connectionID">101297</int>
 				</object>
@@ -2808,7 +2808,7 @@ wGw</bytes>
 							<reference ref="320364181"/>
 							<reference ref="317969355"/>
 							<reference ref="125662958"/>
-							<reference ref="373060259"/>
+							<reference ref="39682406"/>
 						</array>
 						<reference key="parent" ref="275939982"/>
 					</object>
@@ -3735,16 +3735,16 @@ wGw</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">101295</int>
-						<reference key="object" ref="373060259"/>
+						<reference key="object" ref="39682406"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="236179361"/>
+							<reference ref="360384552"/>
 						</array>
 						<reference key="parent" ref="568628114"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">101296</int>
-						<reference key="object" ref="236179361"/>
-						<reference key="parent" ref="373060259"/>
+						<reference key="object" ref="360384552"/>
+						<reference key="parent" ref="39682406"/>
 					</object>
 				</array>
 			</object>
