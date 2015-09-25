@@ -10,7 +10,6 @@
 
 @interface immerseReadDocument : NSDocument
 
-@end
 @property (unsafe_unretained) IBOutlet NSPopUpButton * _voicePopUpButton;
 @property (strong) NSMutableArray *                    _voiceIdentifierList;
 @property (unsafe_unretained) IBOutlet NSSlider *      _rateSlider;
@@ -21,6 +20,8 @@
 @property (unsafe_unretained) IBOutlet NSTextField *   _volumeTextField;
 @property (unsafe_unretained) IBOutlet NSTextField *   _pitchBaseTextField;
 @property (unsafe_unretained) IBOutlet NSTextField *   _pitchModTextField;
+
+@property (unsafe_unretained) IBOutlet NSMatrix *      _stopModeMatrix;
 @property (unsafe_unretained) IBOutlet NSButtonCell *  _immediatelyRadioButton;
 @property (unsafe_unretained) IBOutlet NSButtonCell *  _afterWordRadioButton;
 @property (unsafe_unretained) IBOutlet NSButtonCell *  _afterSentenceRadioButton;
@@ -44,6 +45,8 @@
 @property (unsafe_unretained) IBOutlet NSTextField *   _highlightSecondaryForegroundColorLabelTextField;
 @property (unsafe_unretained) IBOutlet NSColorWell *   _highlightSecondaryBackgroundColorWell;
 @property (unsafe_unretained) IBOutlet NSTextField *   _highlightSecondaryBackgroundColorLabelTextField;
+
+@property (unsafe_unretained) IBOutlet NSMatrix *      _highlightModeMatrix;
 @property (unsafe_unretained) IBOutlet NSButtonCell *  _highlightLineRadioButton;
 @property (unsafe_unretained) IBOutlet NSButtonCell *  _highlightSentenceRadioButton;
 @property (unsafe_unretained) IBOutlet NSButtonCell *  _highlightParagraphRadioButton;
@@ -76,22 +79,26 @@
 @property BOOL                                         _closing;
 
 
-    // Options panel actions
+// Options panel actions
+- (IBAction)resetSettings:(id)sender;
+
 - (IBAction)voicePopupSelected:(id)sender;
 - (IBAction)fontPopupSelected:(id)sender;
 - (void)enableOptionsForSpeakingState:(BOOL)speakingNow;
 
-    // Parameters panel actions
+// Parameters panel actions
 - (IBAction)rateChanged:(id)sender;
 - (IBAction)volumeChanged:(id)sender;
 - (IBAction)pitchBaseChanged:(id)sender;
 - (IBAction)pitchModChanged:(id)sender;
+- (IBAction)stopModeChanged:(id)sender;
 - (IBAction)resetSelected:(id)sender;
 - (void)fillInEditableParameterFields;
 
 - (IBAction)fontSizeChanged:(id)sender;
 - (IBAction)foregroundColorChanged:(id)sender;
 - (IBAction)backgroundColorChanged:(id)sender;
+- (IBAction)highlightModeChanged:(id)sender;
 
 
 - (IBAction)startOrStopSpeaking:(id)sender;

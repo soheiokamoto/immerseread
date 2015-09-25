@@ -24,6 +24,8 @@ const NSUInteger numSurroundingWords = 7;
 @synthesize _volumeTextField = volumeTextField;
 @synthesize _pitchBaseTextField = pitchBaseTextField;
 @synthesize _pitchModTextField = pitchModTextField;
+
+@synthesize _stopModeMatrix = stopModeMatrix;
 @synthesize _immediatelyRadioButton = immediatelyRadioButton;
 @synthesize _afterWordRadioButton = afterWordRadioButton;
 @synthesize _afterSentenceRadioButton = afterSentenceRadioButton;
@@ -47,6 +49,8 @@ const NSUInteger numSurroundingWords = 7;
 @synthesize _highlightSecondaryForegroundColorLabelTextField = highlightSecondaryForegroundColorLabelTextField;
 @synthesize _highlightSecondaryBackgroundColorWell = highlightSecondaryBackgroundColorWell;
 @synthesize _highlightSecondaryBackgroundColorLabelTextField = highlightSecondaryBackgroundColorLabelTextField;
+
+@synthesize _highlightModeMatrix = highlightModeMatrix;
 @synthesize _highlightLineRadioButton = highlightLineRadioButton;
 @synthesize _highlightSentenceRadioButton = highlightSentenceRadioButton;
 @synthesize _highlightParagraphRadioButton = highlightParagraphRadioButton;
@@ -119,18 +123,25 @@ const NSUInteger numSurroundingWords = 7;
     [super windowControllerDidLoadNib:aController];
     // Add any code here that needs to be executed once the windowController has loaded the document's window.
     
+    
     // Set up voices popup
     [self _updateVoicePopup];
-    [voicePopUpButton selectItemAtIndex:0];
+    //[voicePopUpButton selectItemAtIndex:0];
     
     // Set up fonts popup
     [self _updateFontPopup];
-    [fontPopUpButton selectItemAtIndex:0];
+    //[fontPopUpButton selectItemAtIndex:0];
+    
+    
+    [self _initializeSettings];
+    
+    [self _bindSettings];
+    
     
     [startOrStopSpeakingButton setEnabled:true];
     [pauseOrContinueSpeakingButton setEnabled:false];
     
-    [self _updateVoiceControls];
+    //[self _updateVoiceControls];
     
     [[textView window] makeFirstResponder: textView];
     
@@ -148,6 +159,9 @@ const NSUInteger numSurroundingWords = 7;
     textViewLayoutManager = [textView layoutManager];
     
     originalSelectedTextAttributes = [textView.selectedTextAttributes mutableCopy];
+    
+    
+    [self _updateSpeechSettings];
 }
 
 
@@ -237,6 +251,203 @@ const NSUInteger numSurroundingWords = 7;
     }
     
     return readSuccess;    
+}
+
+
+- (void)_bindSettings
+{
+    [fontSizeSlider
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.fontSize"
+     options:[NSDictionary
+              dictionaryWithObject:[NSNumber numberWithBool:YES]
+              forKey:@"NSContinuouslyUpdatesValue"
+              ]
+     ];
+    
+    [highlightWordCheckboxButton
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.highlightWordCheckboxButton"
+     options:[NSDictionary
+              dictionaryWithObject:[NSNumber numberWithBool:YES]
+              forKey:@"NSContinuouslyUpdatesValue"
+              ]
+     ];
+    
+    [highlightSecondaryCheckboxButton
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.highlightSecondaryCheckboxButton"
+     options:[NSDictionary
+              dictionaryWithObject:[NSNumber numberWithBool:YES]
+              forKey:@"NSContinuouslyUpdatesValue"
+              ]
+     ];
+    
+    [foregroundColorWell
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.foregroundColor"
+     options:[NSDictionary
+              dictionaryWithObject: NSUnarchiveFromDataTransformerName
+              forKey:NSValueTransformerNameBindingOption
+              ]
+     ];
+    
+    [backgroundColorWell
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.backgroundColor"
+     options:[NSDictionary
+              dictionaryWithObject: NSUnarchiveFromDataTransformerName
+              forKey:NSValueTransformerNameBindingOption
+              ]
+     ];
+    
+    [highlightWordForegroundColorWell
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.highlightWordForegroundColor"
+     options:[NSDictionary
+              dictionaryWithObject: NSUnarchiveFromDataTransformerName
+              forKey:NSValueTransformerNameBindingOption
+              ]
+     ];
+    
+    [highlightWordBackgroundColorWell
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.highlightWordBackgroundColor"
+     options:[NSDictionary
+              dictionaryWithObject: NSUnarchiveFromDataTransformerName
+              forKey:NSValueTransformerNameBindingOption
+              ]
+     ];
+    
+    [highlightSecondaryForegroundColorWell
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.highlightSecondaryForegroundColor"
+     options:[NSDictionary
+              dictionaryWithObject: NSUnarchiveFromDataTransformerName
+              forKey:NSValueTransformerNameBindingOption
+              ]
+     ];
+    
+    [highlightSecondaryBackgroundColorWell
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.highlightSecondaryBackgroundColor"
+     options:[NSDictionary
+              dictionaryWithObject: NSUnarchiveFromDataTransformerName
+              forKey:NSValueTransformerNameBindingOption
+              ]
+     ];
+    
+
+    [rateSlider
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.rate"
+     options:[NSDictionary
+              dictionaryWithObject:[NSNumber numberWithBool:YES]
+              forKey:@"NSContinuouslyUpdatesValue"
+              ]
+    ];
+    
+    [volumeSlider
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.volume"
+     options:[NSDictionary
+              dictionaryWithObject:[NSNumber numberWithBool:YES]
+              forKey:@"NSContinuouslyUpdatesValue"
+              ]
+    ];
+    
+    [pitchBaseSlider
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.pitchBase"
+     options:[NSDictionary
+              dictionaryWithObject:[NSNumber numberWithBool:YES]
+              forKey:@"NSContinuouslyUpdatesValue"
+              ]
+    ];
+    
+    [pitchModSlider
+     bind:@"value"
+     toObject:[NSUserDefaultsController sharedUserDefaultsController]
+     withKeyPath:@"values.pitchMod"
+     options:[NSDictionary
+              dictionaryWithObject:[NSNumber numberWithBool:YES]
+              forKey:@"NSContinuouslyUpdatesValue"
+              ]
+     ];
+}
+
+
+- (void)_initializeSettings
+{
+    NSLog(@"immerseReadDocument::_initializeSettings()");
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"fontPopup": @0}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"fontSize": @12}];
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"voicePopup": @0}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"rate": @175}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"volume": @1.0}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"pitchBase": @43.34766}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"pitchMod": @139.9994}];
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"highlightWordCheckboxButton": @"Yes"}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"highlightSecondaryCheckboxButton": @"No"}];
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"stopModeTag": @0}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"highlightModeTag": @0}];
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"foregroundColor": [NSArchiver archivedDataWithRootObject:[NSColor blackColor]]}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"backgroundColor": [NSArchiver archivedDataWithRootObject:[NSColor whiteColor]]}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"highlightWordForegroundColor": [NSArchiver archivedDataWithRootObject:[NSColor blackColor]]}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"highlightWordBackgroundColor": [NSArchiver archivedDataWithRootObject:[NSColor colorWithRed:0.7f green:0.84f blue:1.0f alpha:1.0f]]}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"highlightSecondaryForegroundColor": [NSArchiver archivedDataWithRootObject:[NSColor blackColor]]}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"highlightSecondaryBackgroundColor": [NSArchiver archivedDataWithRootObject:[NSColor colorWithRed:0.8f green:0.8f blue:0.8f alpha:1.0f]]}];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    
+    [fontPopUpButton selectItemAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"fontPopup"]];
+    [voicePopUpButton selectItemAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:@"voicePopup"]];
+    
+    [stopModeMatrix selectCellWithTag:[[NSUserDefaults standardUserDefaults] integerForKey:@"stopModeTag"]];
+    [highlightModeMatrix selectCellWithTag:[[NSUserDefaults standardUserDefaults] integerForKey:@"highlightModeTag"]];
+    
+    [foregroundColorWell setColor: [NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"foregroundColor"]]];
+    
+    [backgroundColorWell setColor: [NSUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] dataForKey:@"backgroundColor"]]];
+    
+    [self fontPopupSelected:nil];
+    [self fontSizeChanged:nil];
+    [self backgroundColorChanged:nil];
+    [self foregroundColorChanged:nil];
+    
+    [self voicePopupSelected:nil];
+    [self rateChanged:nil];
+    [self volumeChanged:nil];
+    [self pitchBaseChanged:nil];
+    [self pitchModChanged:nil];
+}
+
+
+- (IBAction)resetSettings:(id)sender
+{
+    NSLog(@"immerseReadDocument::resetSettings()");
+    
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
+    
+    [self _initializeSettings];
 }
 
 
@@ -330,6 +541,10 @@ const NSUInteger numSurroundingWords = 7;
     NSLog(@"immerseReadDocument::voicePopupSelected()");
     
     [self _updateVoiceControls];
+    
+    [[NSUserDefaults standardUserDefaults]
+     setInteger:voicePopUpButton.indexOfSelectedItem
+     forKey:@"voicePopup"];
 }
 
 
@@ -408,6 +623,16 @@ const NSUInteger numSurroundingWords = 7;
 }
 
 
+- (IBAction)stopModeChanged:(id)sender
+{
+    NSLog(@"immerseReadDocument::stopModeChanged()");
+    
+    [[NSUserDefaults standardUserDefaults]
+     setInteger:stopModeMatrix.selectedTag
+     forKey:@"stopModeTag"];
+}
+
+
 - (IBAction)fontPopupSelected:(id)sender
 {
     NSLog(@"immerseReadDocument::fontPopupSelected()");
@@ -425,7 +650,11 @@ const NSUInteger numSurroundingWords = 7;
         NSFont *font = [NSFont userFontOfSize:-1];
         [currentSettings setObject:font.familyName forKey:@"NSFontFamily"];
     }
-        
+    
+    [[NSUserDefaults standardUserDefaults]
+     setInteger:fontPopUpButton.indexOfSelectedItem
+     forKey:@"fontPopup"];
+    
     id font_family = [currentSettings objectForKey:@"NSFontFamily"];
     id font_size = [currentSettings objectForKey:@"NSFontSize"];
     [textView setFont:[NSFont fontWithName:font_family size:[font_size floatValue]]];
@@ -468,9 +697,19 @@ const NSUInteger numSurroundingWords = 7;
 }
 
 
-- (void)_updateSettings
+- (IBAction)highlightModeChanged:(id)sender
 {
-    NSLog(@"immerseReadDocument::_updateSettings()");
+    NSLog(@"immerseReadDocument::highlightModeChanged()");
+    
+    [[NSUserDefaults standardUserDefaults]
+     setInteger:highlightModeMatrix.selectedTag
+     forKey:@"highlightModeTag"];
+}
+
+
+- (void)_updateSpeechSettings
+{
+    NSLog(@"immerseReadDocument::_updateSpeechSettings()");
     
     if( [rateSlider isEnabled] ) 
     {
@@ -747,7 +986,7 @@ const NSUInteger numSurroundingWords = 7;
         
         NSLog(@"Starting to speak: %@", theViewText);
         
-        [self _updateSettings];
+        [self _updateSpeechSettings];
         
         if( url )
         {
